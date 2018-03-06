@@ -17,18 +17,18 @@ import OrderComplete from '../components/shop/order/Complete.vue' //下单
 Vue.use(Router)
 
 let goods = [
-    { name: GoodsList, path: 'goods/list', component: GoodsList },
-    { name: GoodsDetail, path: 'goods/detail/:id', component: GoodsDetail },
+    { name: "GoodsList", path: 'goods/list', component: GoodsList },
+    { name: "GoodsDetail", path: 'goods/detail/:id', component: GoodsDetail },
 ];
 
 let shopcart = [
-    { name: Shopcart, path: 'shopcart', component: Shopcart }
+    { name: "Shopcart", path: 'shopcart', component: Shopcart }
 ];
 
 let order = [
-    { name: OrderSite, path: '/order/site/:ids', component: OrderSite },
-    { name: OrderPay, path: '/order/pay/:id', component: OrderPay },
-    { name: OrderComplete, path: '/order/complete', component: OrderComplete }
+    { name: "OrderSite", path: '/order/site/:ids', component: OrderSite },
+    { name: "OrderPay", path: '/order/pay/:id', component: OrderPay },
+    { name: "OrderComplete", path: '/order/complete', component: OrderComplete }
 ]
 
 export default new Router({

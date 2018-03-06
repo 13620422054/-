@@ -4,13 +4,13 @@
             <el-form :model="ruleForm2" :rules="rules2" status-icon ref="abc" label-width="100px" class="demo-ruleForm">
  
                  <!-- label用来设置表单提示文字, prop用来指定当前表单代表的字段名(可省略, 但是如果需要表单校验与重置功能, 必须写) -->
-                <el-form-item label="账号" prop="uname">
+                <el-form-item label="账号" prop="user_name">
                      <!-- v-model双向数据绑定, 需要绑定data里的数据, 将来要把这些数据提交给后端 -->
-                     <el-input type="text" v-model="ruleForm2.uname" auto-complete="off"></el-input>
+                     <el-input type="text" v-model="ruleForm2.user_name" auto-complete="off"></el-input>
                  </el-form-item>
  
-                 <el-form-item label="密码" prop="upwd">
-                     <el-input type="password" v-model="ruleForm2.upwd" auto-complete="off"></el-input>
+                 <el-form-item label="密码" prop="password">
+                     <el-input type="password" v-model="ruleForm2.password" auto-complete="off"></el-input>
                  </el-form-item>
  
                  <el-form-item>
@@ -31,15 +31,15 @@
       
       return {
         ruleForm2: {
-          uname: '',
-          upwd: ''
+          user_name: 'ivanyb',
+          password: ''
           
         },
         rules2: {
-          uname: [
+          user_name: [
            { required: true, message: "请输入用户名", trigger: "blur" }
           ],
-          upwd: [
+          password: [
             { required: true, message: "请输入密码", trigger: "blur" }
           ]
           
@@ -53,10 +53,10 @@
               if(res.data.status==0){
                 //   this.$alert(res.data.message)
                 //保存用户名
-                localStorage.setItem('uname',res.data.message.uname);
+                localStorage.setItem('user_name',res.data.message.user_name);
                 // 跳转到后台页面
                 // this.$router.push({name:'admin'});
-                let nextPage= this.$router.query.next || 'admin';
+                let nextPage= this.$route.query.next || 'goods/list';
                 this.$router.push({path:nextPage})
               }else{
                    this.$alert(res.data.message)
