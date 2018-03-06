@@ -18,7 +18,33 @@
                         <div class="goods-box clearfix">
                             <!--商品图片-->
                             <div class="pic-box">
-
+                                <div class="magnifier" id="magnifier1">
+                                    <div class="magnifier-container">
+                                        <div class="images-cover"></div>
+                                        <!--当前图片显示容器-->
+                                        <div class="move-view"></div>
+                                        <!--跟随鼠标移动的盒子-->
+                                    </div>
+                                    <div class="magnifier-assembly">
+                                        <div class="magnifier-btn">
+                                            <span class="magnifier-btn-left">&lt;</span>
+                                            <span class="magnifier-btn-right">&gt;</span>
+                                        </div>
+                                        <!--按钮组-->
+                                        <div class="magnifier-line">
+                                            <ul class="clearfix animation03">
+                                                <li v-for="item in top.imglist" :key="item.id">
+                                                    <div class="small-img">
+                                                        <img :src="item.original_path" />
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!--缩略图-->
+                                    </div>
+                                    <div class="magnifier-view"></div>
+                                    <!--经过放大的图片显示容器-->
+                                </div>
                             </div>
                             <!--/商品图片-->
 
@@ -93,7 +119,7 @@
 
                             <div class="tab-content" style="display: block;">
                                 <!--网友评论 抽取公共组件-->
-                              
+
                             </div>
 
                         </div>
@@ -102,7 +128,7 @@
                     <!--/页面左边-->
 
                     <!--页面右边-->
-                   <app-aside></app-aside>
+                    <app-aside></app-aside>
                     <!--/页面右边-->
                 </div>
             </div>
@@ -111,35 +137,51 @@
 </template>
 
 <script>
-    import AppAside from './subcom/CommonAside.vue';
-    export default {
-        components: {
-            AppAside
-        },
-        data(){
-            return{
-                id: this.$route.params.id,
-                num: 1,
-                top:{
-                    goodsinfo :{},
-                    imglist : [],
-                    hotgoodslist : []
-                }   
-            }
-        },
-        methods: {
-            getTop() {
-                this.$http.get(this.$api.goodsDetail + this.id).then(res=>{
-                    if(res.data.status==0){
-                        this.top= res.data.message;
-                    }
-                })
-            }
-        },
-        created () {
-            this.getTop();
-        }
+import AppAside from "./subcom/CommonAside.vue";
+import "@/lib/imgzoom/css/magnifier.css";
+import "@/lib/imgzoom/js/magnifier.js";
+import $ from "jquery";
+export default {
+  components: {
+    AppAside
+  },
+  data() {
+    return {
+      id: this.$route.params.id,
+      num: 1,
+      top: {
+        goodsinfo: {},
+        imglist: [],
+        hotgoodslist: []
+      }
     };
+  },
+  methods: {
+    getTop() {
+      this.$http.get(this.$api.goodsDetail + this.id).then(res => {
+        if (res.data.status == 0) {
+          this.top = res.data.message;
+        }
+      });
+    }
+  },
+  created() {
+    this.getTop();
+  },
+  mounted() {
+    var magnifierConfig = {
+      magnifier: "#magnifier1", //最外层的大容器
+      width: 360, //承载容器宽
+      height: 360, //承载容器高
+      moveWidth: null, //如果设置了移动盒子的宽度，则不计算缩放比例
+      zoom: 5 //缩放比例
+    };
+
+    setTimeout(function() {
+      var _magnifier = $().imgzoon(magnifierConfig);
+    }, 500);
+  }
+};
 </script>
 
 <style scoped>
