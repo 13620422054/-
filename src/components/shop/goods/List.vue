@@ -58,11 +58,13 @@
 
                          <!-- 侧边栏 - 推荐商品列表, 抽取为公共组件 -->
                          <app-aside :list ="top.toplist"></app-aside>
-                         <!-- 页面主体 - 商品列表预览, 抽取为子组件 -->
-                         <list-main></list-main>
+                         
+                         
                     </div>
                 </div>
             </div>
+<!-- 页面主体 - 商品列表预览, 抽取为子组件 -->
+            <list-main></list-main>
         </div>
     </div>
 </template>
@@ -87,7 +89,7 @@ export default {
   methods: {
     getTop() {
       this.$http.get(this.$api.goodsTop).then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.status == 0) {
           this.top = res.data.message;
         }
