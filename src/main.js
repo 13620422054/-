@@ -28,10 +28,15 @@ import './less/index.less'
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+import Vuex from 'vuex'
+import storeCart from './store/car.js'
+
+Vue.use(Vuex)
+    /* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,
     components: { App },
-    template: '<App/>'
+    template: '<App/>',
+    store: new Vuex.Store(storeCart)
 })

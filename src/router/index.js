@@ -14,6 +14,8 @@ import OrderSite from '../components/shop/order/Site.vue' //地址
 import OrderPay from '../components/shop/order/Pay.vue' //支付
 import OrderComplete from '../components/shop/order/Complete.vue' //下单
 
+
+
 Vue.use(Router)
 
 let goods = [
