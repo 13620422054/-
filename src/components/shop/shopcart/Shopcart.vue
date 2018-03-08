@@ -4,7 +4,7 @@
         <div class="section">
             <div class="location">
                 <span>当前位置：</span>
-                <router-link to="/">首页</router-link>&gt;
+                <router-link :to="{name: 'GoodsList'}">首页</router-link>&gt;
                 <router-link to="">购物车</router-link>
             </div>
         </div>
@@ -41,6 +41,7 @@
                         <input id="jsondata" name="jsondata" type="hidden">
                         <table width="100%" align="center" class="cart-table" border="0" cellspacing="0" cellpadding="8">
                             <tbody>
+                                <!-- 表头 -->
                                 <tr>
                                     <th width="48" align="center">
                                         <el-switch :value="allSelected" @change="allChange" active-color="#13ce66"></el-switch>
@@ -51,7 +52,8 @@
                                     <th width="104" align="left">金额(元)</th>
                                     <th width="54" align="center">操作</th>
                                 </tr>
-
+                                
+                                <!-- 表体 -->
                                 <tr v-for="item in goodsList" :key="item.id">
                                     <th width="48" align="center">
                                         <el-switch v-model="item.selected" active-color="#13ce66"></el-switch>
@@ -70,7 +72,7 @@
                                         <td>￥{{item.sell_price*$store.state.cart[item.id]}}</td>
                                     </th>
                                     <th width="54" align="center">
-                                        <el-button size="mini">删除</el-button>
+                                        <el-button size="mini" @click="del(item.id)">删除</el-button>
                                     </th>
                                 </tr>
 
@@ -90,9 +92,9 @@
                                 <tr>
                                     <th align="right" colspan="8">
                                         已选择商品
-                                        <b class="red" id="totalQuantity">5</b> 件 &nbsp;&nbsp;&nbsp;
+                                        <b class="red" id="totalQuantity">{{total}}</b> 件 &nbsp;&nbsp;&nbsp;
                                         商品总金额（不含运费）：
-                                        <span class="red">￥</span><b class="red" id="totalAmount">9999</b>元
+                                        <span class="red">￥</span><b class="red" id="totalAmount">{{totalPrice}}</b>元
                                     </th>
                                 </tr>
                             </tbody>
@@ -126,6 +128,18 @@
             allSelected(){
                 return this.goodsList.every(v=>v.selected);
 
+            },
+            //计算属性
+            total(){
+                let sum = 0;
+                this.goodsList.forEach(v=>v.selected && (sum += this.$store.state.cart[v.id]))
+                return sum;
+            },
+            //计算总金额
+            totalPrice(){
+                let sum = 0;
+                this.goodsList.forEach(v=>v.selected && (sum += this.$store.state.cart[v.id] * v.sell_price))
+                return sum;
             }
         },
         methods: {
@@ -141,7 +155,12 @@
             },
             allChange(newStatus){
                 this.goodsList.forEach(v=>v.selected = newStatus)
+            },
+            del(id){
+                this.goodsList = this.goodsList.filter(v => v.id != id);
+                this.$store.commit('del',id);
             }
+            
         },
         created () {
             this.getGoodList();

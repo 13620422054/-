@@ -4,7 +4,7 @@
         <div class="section">
             <div class="location">
                 <span>当前位置：</span>
-                <a href="/index.html">首页</a> &gt;
+                <router-link :to="{name: 'GoodsList'}">首页</router-link>
                 <a href="/goods.html">购物商城</a>
             </div>
             <!-- 页面头部 - 分类列表与轮播图 -->
